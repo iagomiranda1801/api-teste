@@ -111,13 +111,13 @@ export class AuthController {
 
       const userData = await AuthService.verifyToken(req.user.id, req.user.type);
       
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
         message: 'Dados do usuário obtidos com sucesso',
         data: userData
       });
     } catch (error: any) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         error: 'Token inválido',
         message: error.message

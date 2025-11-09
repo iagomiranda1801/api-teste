@@ -73,7 +73,7 @@ Subscription.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'clients',
+        model: 'users',
         key: 'id'
       },
       onUpdate: 'CASCADE',

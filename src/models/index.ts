@@ -4,14 +4,14 @@ import Client from './Client';
 import Subscription, { SubscriptionType, SubscriptionStatus } from './Subscription';
 
 // Definir relacionamentos
-Client.hasMany(Subscription, {
+User.hasMany(Subscription, {
   foreignKey: 'clientId',
   as: 'subscriptions'
 });
 
-Subscription.belongsTo(Client, {
+Subscription.belongsTo(User, {
   foreignKey: 'clientId',
-  as: 'client'
+  as: 'user'
 });
 
 // Função para sincronizar os modelos com o banco

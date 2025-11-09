@@ -15,45 +15,45 @@ module.exports = {
         email: 'admin@yebox.com',
         password: adminPasswordHash,
         role: 'admin',
-        isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         name: 'Cliente Exemplo',
         email: 'cliente@exemplo.com',
         password: clientPasswordHash,
         role: 'client',
-        isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         name: 'Ana Costa',
         email: 'ana.costa@cliente.com',
         password: clientPasswordHash,
         role: 'client',
-        isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         name: 'Pedro Oliveira',
         email: 'pedro@cliente.com',
         password: clientPasswordHash,
         role: 'client',
-        isActive: false, // Cliente inativo para teste
-        createdAt: new Date(),
-        updatedAt: new Date()
+        is_active: false, // Cliente inativo para teste
+        created_at: new Date(),
+        updated_at: new Date()
       },
       {
         name: 'Maria Silva',
         email: 'maria@cliente.com',
         password: clientPasswordHash,
         role: 'client',
-        isActive: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        is_active: true,
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ], {});
   },

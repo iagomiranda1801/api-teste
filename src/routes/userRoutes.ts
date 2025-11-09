@@ -6,6 +6,13 @@ import { authenticateToken, requireAdmin } from '../middleware/auth';
 const router = express.Router();
 
 /**
+ * @route POST /users/register
+ * @desc Registro público de usuário (sem autenticação)
+ * @access Public
+ */
+router.post('/register', validateUserRegister, UserController.registerUser);
+
+/**
  * @route GET /users
  * @desc Listar todos os usuários com paginação
  * @access Private (Admin only)
@@ -13,7 +20,8 @@ const router = express.Router();
  * @query limit - Limite por página (padrão: 10)
  * @query search - Buscar por nome ou email
  */
-router.get('/', authenticateToken, requireAdmin, UserController.getUsers);
+// Permite que clientes autenticados acessem e vejam apenas seus dados; administradores veem todos os usuários
+router.get('/', authenticateToken, UserController.getUsers);
 
 /**
  * @route GET /users/:id

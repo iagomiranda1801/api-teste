@@ -1,4 +1,4 @@
-import { Client, Subscription, SubscriptionStatus, SubscriptionType } from '../models';
+import { User, Subscription, SubscriptionStatus, SubscriptionType } from '../models';
 
 interface CreateSubscriptionData {
   clientId: number;
@@ -33,8 +33,8 @@ export class SubscriptionService {
       limit,
       include: [
         {
-          model: Client,
-          as: 'client',
+          model: User,
+          as: 'user',
           attributes: ['id', 'name', 'email']
         }
       ],
@@ -57,8 +57,8 @@ export class SubscriptionService {
     const subscription = await Subscription.findByPk(id, {
       include: [
         {
-          model: Client,
-          as: 'client',
+          model: User,
+          as: 'user',
           attributes: ['id', 'name', 'email']
         }
       ]
@@ -76,7 +76,7 @@ export class SubscriptionService {
     const offset = (page - 1) * limit;
 
     // Verificar se o cliente existe
-    const client = await Client.findByPk(clientId);
+    const client = await User.findByPk(clientId);
     if (!client) {
       throw new Error('Cliente não encontrado');
     }
@@ -115,7 +115,7 @@ export class SubscriptionService {
   // Criar nova assinatura
   static async createSubscription(subscriptionData: CreateSubscriptionData) {
     // Verificar se o cliente existe
-    const client = await Client.findByPk(subscriptionData.clientId);
+    const client = await User.findByPk(subscriptionData.clientId);
     if (!client) {
       throw new Error('Cliente não encontrado');
     }
@@ -287,8 +287,8 @@ export class SubscriptionService {
       },
       include: [
         {
-          model: Client,
-          as: 'client',
+          model: User,
+          as: 'user',
           attributes: ['id', 'name', 'email']
         }
       ],

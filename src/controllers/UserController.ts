@@ -1,16 +1,48 @@
 import { Request, Response } from 'express';
-import { UserService } from '../services';
+import { UserService, SubscriptionService } from '../services';
 import { AuthenticatedRequest } from '../middleware/auth';
 
 export class UserController {
-  // GET /users - Listar todos os usuários (apenas admin)
-  static async getUsers(req: Request, res: Response) {
+  // GET /users - Listar todos os usuários (admins) ou retornar próprio usuário + assinatura (clients)
+  static async getUsers(req: AuthenticatedRequest, res: Response) {
     try {
       const page = parseInt(req.query.page as string) || 1;
       const limit = parseInt(req.query.limit as string) || 10;
-      
+
+      // Se o usuário autenticado for um client (por type ou role), retornar apenas seus dados e suas assinaturas
+      console.log("req.user:", req.user);
+      if (req.user && req.user.role === 'client') {
+        const userId = req.user.id;
+
+        try {
+          const user = await UserService.getUserById(userId);
+          console.log("user:", user);
+          
+          try {
+            
+          } catch (subscriptionError) {
+         
+          }
+
+          return res.status(200).json({
+            success: true,
+            message: 'Dados do cliente recuperados com sucesso',
+            data: {
+              user
+            }
+          });
+        } catch (userError) {
+          return res.status(404).json({
+            success: false,
+            error: 'Usuário não encontrado',
+            message: userError.message
+          });
+        }
+      }
+
+      // Caso contrário (admin), retornar a listagem completa
       const result = await UserService.getAllUsers(page, limit);
-      
+
       res.status(200).json({
         success: true,
         message: 'Usuários listados com sucesso',
@@ -88,6 +120,35 @@ export class UserController {
       res.status(400).json({
         success: false,
         error: 'Erro ao criar usuário',
+        message: error.message
+      });
+    }
+  }
+
+  // POST /users/register - Registro público de usuário
+  static async registerUser(req: Request, res: Response) {
+    try {
+      const { name, email, password, role = 'client' } = req.body;
+      
+      // Para registro público, permitir apenas role 'client' por segurança
+      const userRole = role === 'admin' ? 'client' : role;
+      
+      const user = await UserService.createUser({
+        name,
+        email,
+        password,
+        role: userRole
+      });
+      
+      res.status(201).json({
+        success: true,
+        message: 'Usuário registrado com sucesso',
+        data: user
+      });
+    } catch (error: any) {
+      res.status(400).json({
+        success: false,
+        error: 'Erro ao registrar usuário',
         message: error.message
       });
     }

@@ -35,6 +35,7 @@ export class AuthService {
     }
 
     const isValidPassword = await user.validatePassword(password);
+    console.log("isValidPassword:", isValidPassword);
     if (!isValidPassword) {
       throw new Error('Credenciais inválidas');
     }
@@ -43,7 +44,7 @@ export class AuthService {
       id: user.id,
       email: user.email,
       role: user.role,
-      type: 'user'
+      type: user.role === 'admin' ? 'user' : 'client' // Se for admin, type é 'user', senão é 'client'
     });
 
     return {

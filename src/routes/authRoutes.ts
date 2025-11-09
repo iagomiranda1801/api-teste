@@ -27,6 +27,13 @@ router.post('/login/client', validateLogin, AuthController.loginClient);
 router.post('/register/user', authenticateToken, requireAdmin, validateUserRegister, AuthController.registerUser);
 
 /**
+ * @route POST /auth/register/user/public
+ * @desc Registro público de usuário (sem autenticação)
+ * @access Public
+ */
+router.post('/register/user/public', validateUserRegister, AuthController.registerUser);
+
+/**
  * @route POST /auth/register/client
  * @desc Registro de cliente
  * @access Public
